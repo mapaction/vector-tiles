@@ -7,13 +7,13 @@ services:
             - "5432:5432"
         environment:
             POSTGRES_PASSWORD: password123
-            POSTGRES_DB: roads
+            POSTGRES_DB: osm
             POSTGRES_USER: admin
-    node:
-        build: "./node_api"
-        ports:
-            - "9000:9000"
-        volumes:
-            - ./node_api:/usr/src/app
-        working_dir: /usr/src/app
-        command: npm run dev
+    # node:
+    #     build: "./node_api"
+    #     ports:
+    #         - "9000:9000"
+    #     volumes:
+    #         - ./node_api:/usr/src/app
+    #     working_dir: /usr/src/app
+    #     command: npm run dev
