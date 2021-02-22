@@ -8,10 +8,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip postgis postgresql-13-postgis-3 \
     && rm -rf /var/lib/apt/lists/*
 
-
-# COPY FILES INTO CONTAINER
-# RUN shp2pgsql TO LOAD SHP FILES INTO DB
-
+RUN mkdir -p /docker-entrypoint-initdb.d
+COPY ./docker-entrypoint-initdb.d/ /docker-entrypoint-initdb.d/
 
 EXPOSE 5432
 CMD ["postgres"]
