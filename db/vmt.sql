@@ -42,13 +42,16 @@ WITH mvtgeom as (
 SELECT ST_AsMVT(mvtgeom.*) AS mvt
 FROM mvtgeom;
 
--- RM Edit v2.1
+-- RM Edit v2.1 - for display in dbeaver, you can't overlay two 3857 layers on top of each other - don't ask why!
+-- use the first st_transform as 4326 and you can see results spatially - but needs to be changed back to 3857 to work 'properly'
+-- final result is returned as binary which we then need to decode via front end app
+-- can Union layers together to create theme tile sets: https://medium.com/@shahzadbacha.gis/composite-mvt-tiles-with-postgis-4b30d6c9f510
 WITH mvtgeom as (
 	SELECT
-		st_transform(geom, 3857),
-		ST_TileEnvelope(2,2,1)) AS geom,
+		st_transform(geom, 4326),
+		ST_TileEnvelope(2,2,1) AS geom,
 		adm1_en
-	FROM osm.osm.yeman_admin1_3857
+	FROM osm.osm.yeman_admin1_3857 
 	WHERE ST_Intersects (
 		geom,
 		st_transform(st_tileenvelope(2,2,1),3857))
